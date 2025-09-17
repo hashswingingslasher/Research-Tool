@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Dashboard - Silence Laboratories</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__logo">
+                    <h2>Silence Laboratories</h2>
+                    <span class="header__subtitle">Research Dashboard</span>
+                </div>
+                <nav class="header__nav">
+                    <a href="#" class="nav-link">Dashboard</a>
+                    <a href="#" class="nav-link">Reports</a>
+                    <a href="#" class="nav-link">Analytics</a>
+                    <a href="#" class="nav-link">Settings</a>
+                </nav>
+                <div class="header__user">
+                    <div class="notification-icon">🔔</div>
+                    <div class="user-profile">
+                        <span>John Doe</span>
+                        <div class="user-avatar">JD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero__content">
+                    <h1>Industry Research & Intelligence</h1>
+                    <p>Discover market trends, competitive insights, and technology developments in cryptography and digital security</p>
+                    
+                    <!-- Main Search Interface -->
+                    <div class="search-container">
+                        <div class="search-header">
+                            <select class="search-type-selector form-control">
+                                <option>Industry Analysis</option>
+                                <option>Market Research</option>
+                                <option>Technology Trends</option>
+                                <option>Competitive Intelligence</option>
+                                <option>Regulatory Updates</option>
+                            </select>
+                        </div>
+                        <div class="search-input-container">
+                            <input type="text" 
+                                   class="search-input form-control" 
+                                   placeholder="Research MPC market trends, quantum cryptography developments, digital signatures industry..."
+                                   id="mainSearchInput">
+                            <button class="search-btn btn btn--primary" type="button">
+                                <span class="search-icon">🔍</span>
+                                Research
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Search Suggestions -->
+                    <div class="search-suggestions">
+                        <span class="suggestions-label">Popular sectors:</span>
+                        <div class="suggestion-tags">
+                            <button class="suggestion-tag" type="button">Cryptography</button>
+                            <button class="suggestion-tag" type="button">Blockchain</button>
+                            <button class="suggestion-tag" type="button">Digital Signatures</button>
+                            <button class="suggestion-tag" type="button">Multi-Party Computation</button>
+                            <button class="suggestion-tag" type="button">Threshold Signatures</button>
+                            <button class="suggestion-tag" type="button">Cybersecurity</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Access & Categories -->
+            <section class="dashboard-content">
+                <div class="content-grid">
+                    <!-- Research Categories -->
+                    <div class="categories-section">
+                        <h3>Research Categories</h3>
+                        <div class="categories-grid">
+                            <div class="category-card card">
+                                <div class="card__body">
+                                    <h4>Cryptography & MPC</h4>
+                                    <p>Multi-party computation, threshold signatures, cryptographic protocols</p>
+                                    <div class="category-trending">
+                                        <small>Trending: Threshold ECDSA, Post-quantum MPC, Privacy-preserving ML</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card card">
+                                <div class="card__body">
+                                    <h4>Digital Signatures & TSS</h4>
+                                    <p>Threshold signature schemes, digital signature standards</p>
+                                    <div class="category-trending">
+                                        <small>Trending: EdDSA Threshold, NIST Standards, Quantum-resistant signatures</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card card">
+                                <div class="card__body">
+                                    <h4>Blockchain & Web3 Security</h4>
+                                    <p>Distributed systems security, wallet infrastructure</p>
+                                    <div class="category-trending">
+                                        <small>Trending: Wallet custody, DeFi security, Cross-chain protocols</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card card">
+                                <div class="card__body">
+                                    <h4>Quantum Computing</h4>
+                                    <p>Post-quantum cryptography, quantum-safe algorithms</p>
+                                    <div class="category-trending">
+                                        <small>Trending: NIST PQC standards, Quantum key distribution, Lattice-based crypto</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Access -->
+                    <div class="quick-access-section">
+                        <h3>Quick Access</h3>
+                        <div class="quick-access-grid">
+                            <button class="quick-access-btn btn btn--outline" type="button">
+                                📊 Latest Industry Reports
+                            </button>
+                            <button class="quick-access-btn btn btn--outline" type="button">
+                                🏢 Competitive Analysis
+                            </button>
+                            <button class="quick-access-btn btn btn--outline" type="button">
+                                📈 Technology Trends
+                            </button>
+                            <button class="quick-access-btn btn btn--outline" type="button">
+                                💹 Market Sizing
+                            </button>
+                            <button class="quick-access-btn btn btn--outline" type="button">
+                                📋 Regulatory Updates
+                            </button>
+                        </div>
+
+                        <!-- Recent Searches -->
+                        <div class="recent-searches">
+                            <h4>Recent Searches</h4>
+                            <div class="recent-list">
+                                <button class="recent-item" type="button">Threshold signatures adoption rates</button>
+                                <button class="recent-item" type="button">MPC vs traditional cryptography</button>
+                                <button class="recent-item" type="button">Digital wallet security trends</button>
+                                <button class="recent-item" type="button">Post-quantum cryptography market</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <section class="loading-section hidden" id="loadingSection">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <h3>Performing Deep Research...</h3>
+                    <p>Gathering data from credible sources and generating insights</p>
+                    <div class="loading-steps">
+                        <div class="loading-step active">Searching industry databases...</div>
+                        <div class="loading-step">Analyzing market reports...</div>
+                        <div class="loading-step">Gathering competitive intelligence...</div>
+                        <div class="loading-step">Generating visualizations...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section hidden" id="resultsSection">
+                <div class="results-header">
+                    <h2>Research Results: <span id="queryTitle">MPC Market Trends 2024</span></h2>
+                    <div class="results-actions">
+                        <button class="btn btn--outline" type="button">📄 Export PDF</button>
+                        <button class="btn btn--outline" type="button">📊 Export CSV</button>
+                        <button class="btn btn--secondary" type="button">💾 Save Search</button>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Executive Summary -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Executive Summary</h3>
+                        </div>
+                        <div class="card__body">
+                            <p id="executiveSummary">The Multi-Party Computation (MPC) market is experiencing significant growth, driven by increasing cybersecurity threats and demand for privacy-preserving technologies. Market valuation reached $61.4M in 2024 with projected growth to $120M by 2031 at 8.1% CAGR.</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Findings -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Key Findings</h3>
+                        </div>
+                        <div class="card__body">
+                            <ul id="keyFindings">
+                                <li>North America dominates with 40% market share</li>
+                                <li>Rising institutional adoption in cryptocurrency custody</li>
+                                <li>Increasing integration with blockchain technologies</li>
+                                <li>Growing enterprise demand for privacy-preserving computation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Market Data Visualization -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Market Distribution by Region</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="marketChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Players -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Key Market Players</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="players-grid" id="keyPlayers">
+                                <span class="player-tag">IBM</span>
+                                <span class="player-tag">Microsoft</span>
+                                <span class="player-tag">Silence Laboratories</span>
+                                <span class="player-tag">Fireblocks</span>
+                                <span class="player-tag">Zengo</span>
+                                <span class="player-tag">Partisia Blockchain</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Growth Projection -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Market Growth Projection</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="metric-grid">
+                                <div class="metric">
+                                    <div class="metric-value">$61.4M</div>
+                                    <div class="metric-label">Current Value (2024)</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">$120M</div>
+                                    <div class="metric-label">Projected Value (2031)</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">8.1%</div>
+                                    <div class="metric-label">CAGR</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sources -->
+                    <div class="result-card card">
+                        <div class="card__header">
+                            <h3>Sources & Citations</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="sources-list" id="sources">
+                                <div class="source-item">📄 Intel Market Research 2024</div>
+                                <div class="source-item">📄 Strategic Market Research</div>
+                                <div class="source-item">📄 TechCrunch Industry Analysis</div>
+                                <div class="source-item">📄 Precedence Research Market Report</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h4>Research Dashboard</h4>
+                    <p>Internal research and intelligence platform for Silence Laboratories</p>
+                </div>
+                <div class="footer__section">
+                    <h5>Tools</h5>
+                    <a href="#" target="_blank">Market Analysis</a>
+                    <a href="#" target="_blank">Competitive Intelligence</a>
+                    <a href="#" target="_blank">Technology Trends</a>
+                </div>
+                <div class="footer__section">
+                    <h5>Resources</h5>
+                    <a href="#" target="_blank">API Documentation</a>
+                    <a href="#" target="_blank">Research Guidelines</a>
+                    <a href="#" target="_blank">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
