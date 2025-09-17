@@ -1,1508 +1,977 @@
-:root {
-  /* Primitive Color Tokens */
-  --color-white: rgba(255, 255, 255, 1);
-  --color-black: rgba(0, 0, 0, 1);
-  --color-cream-50: rgba(252, 252, 249, 1);
-  --color-cream-100: rgba(255, 255, 253, 1);
-  --color-gray-200: rgba(245, 245, 245, 1);
-  --color-gray-300: rgba(167, 169, 169, 1);
-  --color-gray-400: rgba(119, 124, 124, 1);
-  --color-slate-500: rgba(98, 108, 113, 1);
-  --color-brown-600: rgba(94, 82, 64, 1);
-  --color-charcoal-700: rgba(31, 33, 33, 1);
-  --color-charcoal-800: rgba(38, 40, 40, 1);
-  --color-slate-900: rgba(19, 52, 59, 1);
-  --color-teal-300: rgba(50, 184, 198, 1);
-  --color-teal-400: rgba(45, 166, 178, 1);
-  --color-teal-500: rgba(33, 128, 141, 1);
-  --color-teal-600: rgba(29, 116, 128, 1);
-  --color-teal-700: rgba(26, 104, 115, 1);
-  --color-teal-800: rgba(41, 150, 161, 1);
-  --color-red-400: rgba(255, 84, 89, 1);
-  --color-red-500: rgba(192, 21, 47, 1);
-  --color-orange-400: rgba(230, 129, 97, 1);
-  --color-orange-500: rgba(168, 75, 47, 1);
+// Research Dashboard JavaScript functionality
 
-  /* RGB versions for opacity control */
-  --color-brown-600-rgb: 94, 82, 64;
-  --color-teal-500-rgb: 33, 128, 141;
-  --color-slate-900-rgb: 19, 52, 59;
-  --color-slate-500-rgb: 98, 108, 113;
-  --color-red-500-rgb: 192, 21, 47;
-  --color-red-400-rgb: 255, 84, 89;
-  --color-orange-500-rgb: 168, 75, 47;
-  --color-orange-400-rgb: 230, 129, 97;
+// Research data from provided JSON
+const researchData = {
+  "blockchain security trends": {
+    "executiveSummary": "Blockchain security market is rapidly evolving with new threats and solutions emerging. Market valued at $3.7B in 2024, projected to reach $67.3B by 2030 at 58.7% CAGR.",
+    "keyFindings": [
+      "Smart contract vulnerabilities remain top security concern",
+      "Zero-knowledge proof adoption accelerating for privacy",
+      "Cross-chain bridge attacks increased 200% in 2024",
+      "Enterprise blockchain security spending up 45%"
+    ],
+    "marketData": {
+      "currentValue": "$3.7B",
+      "projectedValue2030": "$67.3B", 
+      "cagr": "58.7%",
+      "regions": {"northAmerica": "42%", "asiaPacific": "28%", "europe": "22%", "others": "8%"}
+    },
+    "keyPlayers": ["CertiK", "ConsenSys", "ChainSecurity", "Trail of Bits", "Quantstamp"],
+    "sources": ["Blockchain Security Alliance Report", "CyberSecurity Ventures", "MarketsandMarkets Research"]
+  },
+  "quantum cryptography": {
+    "executiveSummary": "Quantum cryptography market experiencing significant growth driven by increasing cybersecurity threats and government investments. Market size reached $1.9B in 2024 with 32.1% CAGR projected through 2031.",
+    "keyFindings": [
+      "Government sector leads adoption with 40% market share",
+      "NIST post-quantum standards driving enterprise preparation",
+      "Quantum key distribution deployments growing 150% annually",
+      "Banking sector investing heavily in quantum-safe solutions"
+    ],
+    "marketData": {
+      "currentValue": "$1.9B",
+      "projectedValue2031": "$12.6B",
+      "cagr": "32.1%", 
+      "regions": {"northAmerica": "45%", "europe": "30%", "asiaPacific": "20%", "others": "5%"}
+    },
+    "keyPlayers": ["IBM", "ID Quantique", "MagiQ Technologies", "Toshiba", "QuintessenceLabs"],
+    "sources": ["Quantum Industry Report 2024", "NIST Post-Quantum Standards", "McKinsey Quantum Computing"]
+  },
+  "digital signatures market": {
+    "executiveSummary": "Digital signatures market shows robust growth driven by remote work adoption and regulatory compliance requirements. Market valued at $5.2B in 2024, expected to reach $28.1B by 2030.",
+    "keyFindings": [
+      "Cloud-based solutions account for 65% of market share",
+      "Healthcare sector adoption accelerated by 180%",
+      "eIDAS regulation driving European market growth",
+      "Mobile digital signatures growing at 45% CAGR"
+    ],
+    "marketData": {
+      "currentValue": "$5.2B",
+      "projectedValue2030": "$28.1B",
+      "cagr": "32.8%",
+      "regions": {"northAmerica": "38%", "europe": "32%", "asiaPacific": "25%", "others": "5%"}
+    },
+    "keyPlayers": ["DocuSign", "Adobe", "HelloSign", "Esignlive", "SignNow"],
+    "sources": ["Digital Signature Market Research", "Grand View Research", "Fortune Business Insights"]
+  },
+  "mpc applications": {
+    "executiveSummary": "Multi-Party Computation applications expanding beyond traditional use cases into healthcare, finance, and AI. Market growing from $61.4M in 2024 to $120M by 2031 at 8.1% CAGR.",
+    "keyFindings": [
+      "Healthcare data sharing driving 40% of growth",
+      "Financial services adopt MPC for regulatory compliance",
+      "AI model training with privacy preservation emerging use case",
+      "Threshold signature implementations gaining enterprise traction"
+    ],
+    "marketData": {
+      "currentValue": "$61.4M",
+      "projectedValue2031": "$120M",
+      "cagr": "8.1%",
+      "regions": {"northAmerica": "40%", "asiaPacific": "30%", "europe": "25%", "others": "5%"}
+    },
+    "keyPlayers": ["Silence Laboratories", "Partisia Blockchain", "Sharemind", "Unbound Tech", "Fireblocks"],
+    "sources": ["MPC Market Analysis", "Privacy Tech Research", "Intel Market Research"]
+  },
+  "threshold signatures adoption": {
+    "executiveSummary": "Threshold signatures seeing increased adoption in cryptocurrency custody and enterprise key management. Market growing rapidly with 85% year-over-year growth in implementations.",
+    "keyFindings": [
+      "Crypto custody solutions drive 60% of implementations",
+      "Enterprise key management adoption up 150%",
+      "DeFi protocols integrating threshold signatures for security",
+      "Regulatory pressure accelerating financial sector adoption"
+    ],
+    "marketData": {
+      "currentValue": "$45M",
+      "projectedValue2031": "$340M",
+      "cagr": "85%",
+      "regions": {"northAmerica": "50%", "asiaPacific": "25%", "europe": "20%", "others": "5%"}
+    },
+    "keyPlayers": ["Silence Laboratories", "Zengo", "Fireblocks", "Coinbase Custody", "BitGo"],
+    "sources": ["Threshold Cryptography Report", "Crypto Custody Research", "Digital Asset Security Study"]
+  },
+  "cybersecurity trends": {
+    "executiveSummary": "Cybersecurity landscape evolving rapidly with AI-driven threats and solutions. Global spending reached $188B in 2024, projected to hit $366B by 2030 at 11.8% CAGR.",
+    "keyFindings": [
+      "AI-powered attacks increasing by 300% annually",
+      "Zero-trust architecture adoption up 200%",
+      "Cloud security spending growing at 25% CAGR",
+      "Supply chain attacks targeting critical infrastructure"
+    ],
+    "marketData": {
+      "currentValue": "$188B",
+      "projectedValue2030": "$366B",
+      "cagr": "11.8%",
+      "regions": {"northAmerica": "41%", "europe": "29%", "asiaPacific": "24%", "others": "6%"}
+    },
+    "keyPlayers": ["CrowdStrike", "Palo Alto Networks", "Fortinet", "Check Point", "Zscaler"],
+    "sources": ["Cybersecurity Market Report", "Gartner Security Spending", "Cybersecurity Ventures"]
+  }
+};
 
-  /* Background color tokens (Light Mode) */
-  --color-bg-1: rgba(59, 130, 246, 0.08); /* Light blue */
-  --color-bg-2: rgba(245, 158, 11, 0.08); /* Light yellow */
-  --color-bg-3: rgba(34, 197, 94, 0.08); /* Light green */
-  --color-bg-4: rgba(239, 68, 68, 0.08); /* Light red */
-  --color-bg-5: rgba(147, 51, 234, 0.08); /* Light purple */
-  --color-bg-6: rgba(249, 115, 22, 0.08); /* Light orange */
-  --color-bg-7: rgba(236, 72, 153, 0.08); /* Light pink */
-  --color-bg-8: rgba(6, 182, 212, 0.08); /* Light cyan */
+// Application state
+let currentView = 'dashboard';
+let currentSearchData = null;
+let marketChartInstance = null;
+let loadingInterval = null;
+let searchTimeout = null;
+let currentLoadingStep = 0;
 
-  /* Semantic Color Tokens (Light Mode) */
-  --color-background: var(--color-cream-50);
-  --color-surface: var(--color-cream-100);
-  --color-text: var(--color-slate-900);
-  --color-text-secondary: var(--color-slate-500);
-  --color-primary: var(--color-teal-500);
-  --color-primary-hover: var(--color-teal-600);
-  --color-primary-active: var(--color-teal-700);
-  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
-  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-btn-primary-text: var(--color-cream-50);
-  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-error: var(--color-red-500);
-  --color-success: var(--color-teal-500);
-  --color-warning: var(--color-orange-500);
-  --color-info: var(--color-slate-500);
-  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
-  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+const loadingSteps = [
+  "Searching industry databases...",
+  "Analyzing market reports...",
+  "Gathering competitive intelligence...",
+  "Generating visualizations..."
+];
 
-  /* Common style patterns */
-  --focus-ring: 0 0 0 3px var(--color-focus-ring);
-  --focus-outline: 2px solid var(--color-primary);
-  --status-bg-opacity: 0.15;
-  --status-border-opacity: 0.25;
-  --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+// Initialize application
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Research Dashboard initializing...');
+  initializeEventListeners();
+  showDashboardView();
+});
 
-  /* RGB versions for opacity control */
-  --color-success-rgb: 33, 128, 141;
-  --color-error-rgb: 192, 21, 47;
-  --color-warning-rgb: 168, 75, 47;
-  --color-info-rgb: 98, 108, 113;
-
-  /* Typography */
-  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
-    Monaco, Consolas, monospace;
-  --font-size-xs: 11px;
-  --font-size-sm: 12px;
-  --font-size-base: 14px;
-  --font-size-md: 14px;
-  --font-size-lg: 16px;
-  --font-size-xl: 18px;
-  --font-size-2xl: 20px;
-  --font-size-3xl: 24px;
-  --font-size-4xl: 30px;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 550;
-  --font-weight-bold: 600;
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
-  --letter-spacing-tight: -0.01em;
-
-  /* Spacing */
-  --space-0: 0;
-  --space-1: 1px;
-  --space-2: 2px;
-  --space-4: 4px;
-  --space-6: 6px;
-  --space-8: 8px;
-  --space-10: 10px;
-  --space-12: 12px;
-  --space-16: 16px;
-  --space-20: 20px;
-  --space-24: 24px;
-  --space-32: 32px;
-
-  /* Border Radius */
-  --radius-sm: 6px;
-  --radius-base: 8px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
-  /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
-    0 2px 4px -1px rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
-    0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
-
-  /* Animation */
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Layout */
-  --container-sm: 640px;
-  --container-md: 768px;
-  --container-lg: 1024px;
-  --container-xl: 1280px;
-}
-
-/* Dark mode colors */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* RGB versions for opacity control (Dark Mode) */
-    --color-gray-400-rgb: 119, 124, 124;
-    --color-teal-300-rgb: 50, 184, 198;
-    --color-gray-300-rgb: 167, 169, 169;
-    --color-gray-200-rgb: 245, 245, 245;
-
-    /* Background color tokens (Dark Mode) */
-    --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
-    --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
-    --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
-    --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
-    --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
-    --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
-    --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
-    --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
-
-    /* Semantic Color Tokens (Dark Mode) */
-    --color-background: var(--color-charcoal-700);
-    --color-surface: var(--color-charcoal-800);
-    --color-text: var(--color-gray-200);
-    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
-    --color-primary: var(--color-teal-300);
-    --color-primary-hover: var(--color-teal-400);
-    --color-primary-active: var(--color-teal-800);
-    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
-    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
-    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
-    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
-    --color-error: var(--color-red-400);
-    --color-success: var(--color-teal-300);
-    --color-warning: var(--color-orange-400);
-    --color-info: var(--color-gray-300);
-    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
-    --color-btn-primary-text: var(--color-slate-900);
-    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
-    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
-    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-    --button-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
-    --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
-    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
-
-    /* Common style patterns - updated for dark mode */
-    --focus-ring: 0 0 0 3px var(--color-focus-ring);
-    --focus-outline: 2px solid var(--color-primary);
-    --status-bg-opacity: 0.15;
-    --status-border-opacity: 0.25;
-    --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-
-    /* RGB versions for dark mode */
-    --color-success-rgb: var(--color-teal-300-rgb);
-    --color-error-rgb: var(--color-red-400-rgb);
-    --color-warning-rgb: var(--color-orange-400-rgb);
-    --color-info-rgb: var(--color-gray-300-rgb);
+// Initialize all event listeners
+function initializeEventListeners() {
+  // Search functionality
+  const searchInput = document.getElementById('mainSearchInput');
+  const searchBtn = document.querySelector('.search-btn');
+  
+  if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        performSearch();
+      }
+    });
+  }
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      performSearch();
+    });
+  }
+  
+  // Navigation links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const linkText = this.textContent.trim().toLowerCase();
+      navigateToSection(linkText);
+    });
+  });
+  
+  // Logo click to return to dashboard
+  const logo = document.querySelector('.header__logo');
+  if (logo) {
+    logo.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateToSection('dashboard');
+    });
+    logo.style.cursor = 'pointer';
   }
 }
 
-/* Data attribute for manual theme switching */
-[data-color-scheme="dark"] {
-  /* RGB versions for opacity control (dark mode) */
-  --color-gray-400-rgb: 119, 124, 124;
-  --color-teal-300-rgb: 50, 184, 198;
-  --color-gray-300-rgb: 167, 169, 169;
-  --color-gray-200-rgb: 245, 245, 245;
-
-  /* Colorful background palette - Dark Mode */
-  --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
-  --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
-  --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
-  --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
-  --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
-  --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
-  --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
-  --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
-
-  /* Semantic Color Tokens (Dark Mode) */
-  --color-background: var(--color-charcoal-700);
-  --color-surface: var(--color-charcoal-800);
-  --color-text: var(--color-gray-200);
-  --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
-  --color-primary: var(--color-teal-300);
-  --color-primary-hover: var(--color-teal-400);
-  --color-primary-active: var(--color-teal-800);
-  --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
-  --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
-  --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
-  --color-border: rgba(var(--color-gray-400-rgb), 0.3);
-  --color-error: var(--color-red-400);
-  --color-success: var(--color-teal-300);
-  --color-warning: var(--color-orange-400);
-  --color-info: var(--color-gray-300);
-  --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
-  --color-btn-primary-text: var(--color-slate-900);
-  --color-card-border: rgba(var(--color-gray-400-rgb), 0.15);
-  --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
-  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
-  --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
-
-  /* Common style patterns - updated for dark mode */
-  --focus-ring: 0 0 0 3px var(--color-focus-ring);
-  --focus-outline: 2px solid var(--color-primary);
-  --status-bg-opacity: 0.15;
-  --status-border-opacity: 0.25;
-  --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-
-  /* RGB versions for dark mode */
-  --color-success-rgb: var(--color-teal-300-rgb);
-  --color-error-rgb: var(--color-red-400-rgb);
-  --color-warning-rgb: var(--color-orange-400-rgb);
-  --color-info-rgb: var(--color-gray-300-rgb);
-}
-
-[data-color-scheme="light"] {
-  /* RGB versions for opacity control (light mode) */
-  --color-brown-600-rgb: 94, 82, 64;
-  --color-teal-500-rgb: 33, 128, 141;
-  --color-slate-900-rgb: 19, 52, 59;
-
-  /* Semantic Color Tokens (Light Mode) */
-  --color-background: var(--color-cream-50);
-  --color-surface: var(--color-cream-100);
-  --color-text: var(--color-slate-900);
-  --color-text-secondary: var(--color-slate-500);
-  --color-primary: var(--color-teal-500);
-  --color-primary-hover: var(--color-teal-600);
-  --color-primary-active: var(--color-teal-700);
-  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
-  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-btn-primary-text: var(--color-cream-50);
-  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-error: var(--color-red-500);
-  --color-success: var(--color-teal-500);
-  --color-warning: var(--color-orange-500);
-  --color-info: var(--color-slate-500);
-  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
-
-  /* RGB versions for light mode */
-  --color-success-rgb: var(--color-teal-500-rgb);
-  --color-error-rgb: var(--color-red-500-rgb);
-  --color-warning-rgb: var(--color-orange-500-rgb);
-  --color-info-rgb: var(--color-slate-500-rgb);
-}
-
-/* Base styles */
-html {
-  font-size: var(--font-size-base);
-  font-family: var(--font-family-base);
-  line-height: var(--line-height-normal);
-  color: var(--color-text);
-  background-color: var(--color-background);
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  color: var(--color-text);
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-h1 {
-  font-size: var(--font-size-4xl);
-}
-h2 {
-  font-size: var(--font-size-3xl);
-}
-h3 {
-  font-size: var(--font-size-2xl);
-}
-h4 {
-  font-size: var(--font-size-xl);
-}
-h5 {
-  font-size: var(--font-size-lg);
-}
-h6 {
-  font-size: var(--font-size-md);
-}
-
-p {
-  margin: 0 0 var(--space-16) 0;
-}
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-standard);
-}
-
-a:hover {
-  color: var(--color-primary-hover);
-}
-
-code,
-pre {
-  font-family: var(--font-family-mono);
-  font-size: calc(var(--font-size-base) * 0.95);
-  background-color: var(--color-secondary);
-  border-radius: var(--radius-sm);
-}
-
-code {
-  padding: var(--space-1) var(--space-4);
-}
-
-pre {
-  padding: var(--space-16);
-  margin: var(--space-16) 0;
-  overflow: auto;
-  border: 1px solid var(--color-border);
-}
-
-pre code {
-  background: none;
-  padding: 0;
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-base);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-  line-height: 1.5;
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-standard);
-  border: none;
-  text-decoration: none;
-  position: relative;
-}
-
-.btn:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
-.btn--primary {
-  background: var(--color-primary);
-  color: var(--color-btn-primary-text);
-}
-
-.btn--primary:hover {
-  background: var(--color-primary-hover);
-}
-
-.btn--primary:active {
-  background: var(--color-primary-active);
-}
-
-.btn--secondary {
-  background: var(--color-secondary);
-  color: var(--color-text);
-}
-
-.btn--secondary:hover {
-  background: var(--color-secondary-hover);
-}
-
-.btn--secondary:active {
-  background: var(--color-secondary-active);
-}
-
-.btn--outline {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-}
-
-.btn--outline:hover {
-  background: var(--color-secondary);
-}
-
-.btn--sm {
-  padding: var(--space-4) var(--space-12);
-  font-size: var(--font-size-sm);
-  border-radius: var(--radius-sm);
-}
-
-.btn--lg {
-  padding: var(--space-10) var(--space-20);
-  font-size: var(--font-size-lg);
-  border-radius: var(--radius-md);
-}
-
-.btn--full-width {
-  width: 100%;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Form elements */
-.form-control {
-  display: block;
-  width: 100%;
-  padding: var(--space-8) var(--space-12);
-  font-size: var(--font-size-md);
-  line-height: 1.5;
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  transition: border-color var(--duration-fast) var(--ease-standard),
-    box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-textarea.form-control {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-}
-
-select.form-control {
-  padding: var(--space-8) var(--space-12);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: var(--select-caret-light);
-  background-repeat: no-repeat;
-  background-position: right var(--space-12) center;
-  background-size: 16px;
-  padding-right: var(--space-32);
-}
-
-/* Add a dark mode specific caret */
-@media (prefers-color-scheme: dark) {
-  select.form-control {
-    background-image: var(--select-caret-dark);
+// Navigation function
+function navigateToSection(section) {
+  console.log('Navigating to section:', section);
+  currentView = section;
+  
+  // Update active nav link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim().toLowerCase() === section) {
+      link.classList.add('active');
+    }
+  });
+  
+  switch(section) {
+    case 'dashboard':
+      showDashboardView();
+      break;
+    case 'reports':
+      showReportsView();
+      break;
+    case 'analytics':
+      showAnalyticsView();
+      break;
+    case 'settings':
+      showSettingsView();
+      break;
+    default:
+      showDashboardView();
   }
 }
 
-/* Also handle data-color-scheme */
-[data-color-scheme="dark"] select.form-control {
-  background-image: var(--select-caret-dark);
+// Show dashboard view
+function showDashboardView() {
+  hideAllSections();
+  const heroSection = document.querySelector('.hero');
+  const dashboardSection = document.querySelector('.dashboard-content');
+  
+  if (heroSection) heroSection.style.display = 'block';
+  if (dashboardSection) dashboardSection.style.display = 'block';
+  
+  // Re-setup dashboard event listeners
+  setupDashboardEventListeners();
 }
 
-[data-color-scheme="light"] select.form-control {
-  background-image: var(--select-caret-light);
+// Setup dashboard-specific event listeners
+function setupDashboardEventListeners() {
+  // Suggestion tags
+  document.querySelectorAll('.suggestion-tag').forEach(tag => {
+    tag.onclick = null; // Remove existing handlers
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      const query = this.textContent.trim();
+      quickSearch(query);
+    });
+  });
+  
+  // Category cards
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.onclick = null;
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      const categoryTitle = this.querySelector('h4').textContent.trim();
+      searchCategory(categoryTitle);
+    });
+  });
+  
+  // Quick access buttons
+  document.querySelectorAll('.quick-access-btn').forEach(btn => {
+    btn.onclick = null;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const buttonText = this.textContent.trim();
+      handleQuickAccess(buttonText);
+    });
+  });
+  
+  // Recent items
+  document.querySelectorAll('.recent-item').forEach(item => {
+    item.onclick = null;
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const query = this.textContent.trim();
+      quickSearch(query);
+    });
+  });
 }
 
-.form-control:focus {
-  border-color: var(--color-primary);
-  outline: var(--focus-outline);
+// Hide all main sections
+function hideAllSections() {
+  const sections = [
+    '.hero',
+    '.dashboard-content', 
+    '#loadingSection',
+    '#resultsSection',
+    '#reportsSection',
+    '#analyticsSection',
+    '#settingsSection'
+  ];
+  
+  sections.forEach(selector => {
+    const section = document.querySelector(selector);
+    if (section) {
+      section.style.display = 'none';
+      section.classList.add('hidden');
+    }
+  });
 }
 
-.form-label {
-  display: block;
-  margin-bottom: var(--space-8);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-}
-
-.form-group {
-  margin-bottom: var(--space-16);
-}
-
-/* Card component */
-.card {
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-card-border);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  transition: box-shadow var(--duration-normal) var(--ease-standard);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.card__body {
-  padding: var(--space-16);
-}
-
-.card__header,
-.card__footer {
-  padding: var(--space-16);
-  border-bottom: 1px solid var(--color-card-border-inner);
-}
-
-/* Status indicators - simplified with CSS variables */
-.status {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-6) var(--space-12);
-  border-radius: var(--radius-full);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-}
-
-.status--success {
-  background-color: rgba(
-    var(--color-success-rgb, 33, 128, 141),
-    var(--status-bg-opacity)
-  );
-  color: var(--color-success);
-  border: 1px solid
-    rgba(var(--color-success-rgb, 33, 128, 141), var(--status-border-opacity));
-}
-
-.status--error {
-  background-color: rgba(
-    var(--color-error-rgb, 192, 21, 47),
-    var(--status-bg-opacity)
-  );
-  color: var(--color-error);
-  border: 1px solid
-    rgba(var(--color-error-rgb, 192, 21, 47), var(--status-border-opacity));
-}
-
-.status--warning {
-  background-color: rgba(
-    var(--color-warning-rgb, 168, 75, 47),
-    var(--status-bg-opacity)
-  );
-  color: var(--color-warning);
-  border: 1px solid
-    rgba(var(--color-warning-rgb, 168, 75, 47), var(--status-border-opacity));
-}
-
-.status--info {
-  background-color: rgba(
-    var(--color-info-rgb, 98, 108, 113),
-    var(--status-bg-opacity)
-  );
-  color: var(--color-info);
-  border: 1px solid
-    rgba(var(--color-info-rgb, 98, 108, 113), var(--status-border-opacity));
-}
-
-/* Container layout */
-.container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: var(--space-16);
-  padding-left: var(--space-16);
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: var(--container-sm);
+// Main search function
+function performSearch(query = null) {
+  const searchInput = document.getElementById('mainSearchInput');
+  const searchQuery = query || (searchInput ? searchInput.value.trim() : '');
+  
+  if (!searchQuery) {
+    showNotification('Please enter a search query', 'error');
+    return;
   }
-}
-@media (min-width: 768px) {
-  .container {
-    max-width: var(--container-md);
+  
+  console.log('Performing search for:', searchQuery);
+  
+  // Find matching research data
+  const matchedData = findMatchingResearchData(searchQuery);
+  currentSearchData = matchedData;
+  
+  // Show loading
+  hideAllSections();
+  const loadingSection = document.getElementById('loadingSection');
+  if (loadingSection) {
+    loadingSection.style.display = 'block';
+    loadingSection.classList.remove('hidden');
   }
-}
-@media (min-width: 1024px) {
-  .container {
-    max-width: var(--container-lg);
+  
+  // Update query title
+  const queryTitle = document.getElementById('queryTitle');
+  if (queryTitle) {
+    queryTitle.textContent = searchQuery;
   }
+  
+  // Start loading animation
+  startLoadingAnimation();
+  
+  // Show results after delay
+  searchTimeout = setTimeout(() => {
+    stopLoadingAnimation();
+    showSearchResults();
+  }, 3000);
 }
-@media (min-width: 1280px) {
-  .container {
-    max-width: var(--container-xl);
+
+// Find matching research data based on query
+function findMatchingResearchData(query) {
+  const queryLower = query.toLowerCase();
+  
+  // Direct topic matching
+  if (queryLower.includes('blockchain') || queryLower.includes('web3')) {
+    return researchData["blockchain security trends"];
+  } else if (queryLower.includes('quantum')) {
+    return researchData["quantum cryptography"];
+  } else if (queryLower.includes('digital signature') || queryLower.includes('signature')) {
+    return researchData["digital signatures market"];
+  } else if (queryLower.includes('mpc') || queryLower.includes('multi-party') || queryLower.includes('cryptography')) {
+    return researchData["mpc applications"];
+  } else if (queryLower.includes('threshold')) {
+    return researchData["threshold signatures adoption"];
+  } else if (queryLower.includes('cybersecurity') || queryLower.includes('security')) {
+    return researchData["cybersecurity trends"];
   }
-}
-
-/* Utility classes */
-.flex {
-  display: flex;
-}
-.flex-col {
-  flex-direction: column;
-}
-.items-center {
-  align-items: center;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-between {
-  justify-content: space-between;
-}
-.gap-4 {
-  gap: var(--space-4);
-}
-.gap-8 {
-  gap: var(--space-8);
-}
-.gap-16 {
-  gap: var(--space-16);
-}
-
-.m-0 {
-  margin: 0;
-}
-.mt-8 {
-  margin-top: var(--space-8);
-}
-.mb-8 {
-  margin-bottom: var(--space-8);
-}
-.mx-8 {
-  margin-left: var(--space-8);
-  margin-right: var(--space-8);
-}
-.my-8 {
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-8);
-}
-
-.p-0 {
-  padding: 0;
-}
-.py-8 {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
-}
-.px-8 {
-  padding-left: var(--space-8);
-  padding-right: var(--space-8);
-}
-.py-16 {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
-}
-.px-16 {
-  padding-left: var(--space-16);
-  padding-right: var(--space-16);
-}
-
-.block {
-  display: block;
-}
-.hidden {
-  display: none;
-}
-
-/* Accessibility */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-:focus-visible {
-  outline: var(--focus-outline);
-  outline-offset: 2px;
-}
-
-/* Dark mode specifics */
-[data-color-scheme="dark"] .btn--outline {
-  border: 1px solid var(--color-border-secondary);
-}
-
-@font-face {
-  font-family: 'FKGroteskNeue';
-  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
-    format('woff2');
-}
-
-/* END PERPLEXITY DESIGN SYSTEM */
-/* Updated custom styles for Silence Laboratories Research Dashboard */
-
-/* Force light mode theme */
-[data-color-scheme] {
-  --color-background: var(--color-cream-50);
-  --color-surface: var(--color-cream-100);
-  --color-text: var(--color-slate-900);
-  --color-text-secondary: var(--color-slate-500);
-  /* Override primary to Silence blue accent but remain in variable */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-active: #1e40af;
-  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
-  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-btn-primary-text: var(--color-cream-50);
-  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
-}
-
-/* Override root for lighting theme enforcement */
-:root {
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-active: #1e40af;
-  --color-primary-rgb: 37, 99, 235;
-}
-
-body {
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
-
-/* Header */
-.header {
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-card-border);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header__content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-16) 0;
-}
-
-.header__logo h2 {
-  margin: 0;
-  color: var(--color-primary);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-}
-
-.header__subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-left: var(--space-8);
-}
-
-.header__nav {
-  display: flex;
-  gap: var(--space-24);
-}
-
-.nav-link {
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-base);
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-.header__user {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-}
-
-.notification-icon {
-  font-size: var(--font-size-lg);
-  cursor: pointer;
-  padding: var(--space-8);
-  border-radius: var(--radius-base);
-  transition: background var(--duration-fast) var(--ease-standard);
-}
-
-.notification-icon:hover {
-  background: var(--color-secondary);
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  cursor: pointer;
-}
-
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  background: var(--color-primary);
-  color: white;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-}
-
-/* Hero Section */
-.hero {
-  padding: var(--space-32) 0;
-  background: var(--color-bg-1);
-  text-align: center;
-}
-
-.hero__content h1 {
-  font-size: var(--font-size-4xl);
-  margin-bottom: var(--space-16);
-  color: var(--color-text);
-}
-
-.hero__content p {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-32);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Search Container */
-.search-container {
-  max-width: 800px;
-  margin: 0 auto var(--space-24);
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-card-border);
-}
-
-.search-header {
-  margin-bottom: var(--space-16);
-}
-
-.search-type-selector {
-  max-width: 200px;
-  margin: 0 auto;
-}
-
-.search-input-container {
-  display: flex;
-  gap: var(--space-12);
-  align-items: center;
-}
-
-.search-input {
-  flex: 1;
-  padding: var(--space-12) var(--space-16);
-  font-size: var(--font-size-lg);
-  border-radius: var(--radius-md);
-}
-
-.search-btn {
-  padding: var(--space-12) var(--space-24);
-  font-size: var(--font-size-lg);
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  white-space: nowrap;
-}
-
-.search-icon {
-  font-size: var(--font-size-xl);
-}
-
-/* Search Suggestions */
-.search-suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-8);
-  margin-top: var(--space-16);
-}
-
-.suggestions-label {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-right: var(--space-8);
-}
-
-.suggestion-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-
-.suggestion-tag {
-  background: var(--color-bg-5);
-  color: var(--color-text);
-  padding: var(--space-6) var(--space-12);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  border: none;
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.suggestion-tag:hover {
-  background: var(--color-primary);
-  color: white;
-  transform: translateY(-2px);
-}
-
-/* Dashboard Content */
-.dashboard-content {
-  padding: var(--space-32) 0;
-}
-
-.content-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--space-32);
-}
-
-.categories-section h3,
-.quick-access-section h3 {
-  margin-bottom: var(--space-24);
-  color: var(--color-text);
-}
-
-/* Categories Grid */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-20);
-}
-
-.category-card {
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-standard);
-  border: 1px solid var(--color-card-border);
-}
-
-.category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary);
-}
-
-.category-card h4 {
-  color: var(--color-primary);
-  margin-bottom: var(--space-8);
-}
-
-.category-card p {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-12);
-}
-
-.category-trending {
-  padding: var(--space-8);
-  background: var(--color-bg-2);
-  border-radius: var(--radius-sm);
-}
-
-.category-trending small {
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Quick Access */
-.quick-access-grid {
-  display: grid;
-  gap: var(--space-12);
-  margin-bottom: var(--space-24);
-}
-
-.quick-access-btn {
-  justify-content: flex-start;
-  text-align: left;
-  padding: var(--space-12) var(--space-16);
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.quick-access-btn:hover {
-  transform: translateX(4px);
-  border-color: var(--color-primary);
-}
-
-/* Recent Searches */
-.recent-searches h4 {
-  margin-bottom: var(--space-16);
-  font-size: var(--font-size-lg);
-}
-
-.recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.recent-item {
-  background: none;
-  border: none;
-  text-align: left;
-  padding: var(--space-8);
-  color: var(--color-text-secondary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-  font-size: var(--font-size-sm);
-}
-
-.recent-item:hover {
-  background: var(--color-secondary);
-  color: var(--color-text);
-  transform: translateX(4px);
-}
-
-/* Loading Section */
-.loading-section {
-  padding: var(--space-32) 0;
-  text-align: center;
-}
-
-.loading-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid var(--color-secondary);
-  border-top: 4px solid var(--color-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto var(--space-24);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-.loading-steps {
-  margin-top: var(--space-24);
-  text-align: left;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.loading-step {
-  padding: var(--space-8);
-  color: var(--color-text-secondary);
-  opacity: 0.5;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.loading-step.active {
-  color: var(--color-primary);
-  opacity: 1;
-  font-weight: var(--font-weight-medium);
-}
-
-/* Results Section */
-.results-section {
-  padding: var(--space-32) 0;
-}
-
-.results-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-32);
-  flex-wrap: wrap;
-  gap: var(--space-16);
-}
-
-.results-header h2 {
-  color: var(--color-text);
-}
-
-.results-actions {
-  display: flex;
-  gap: var(--space-12);
-  flex-wrap: wrap;
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: var(--space-24);
-}
-
-.result-card {
-  border: 1px solid var(--color-card-border);
-}
-
-.result-card .card__header {
-  background: var(--color-bg-1);
-  border-bottom: 1px solid var(--color-card-border-inner);
-}
-
-.result-card .card__header h3 {
-  color: var(--color-primary);
-}
-
-/* Key Findings */
-#keyFindings {
-  list-style: none;
-  padding: 0;
-}
-
-#keyFindings li {
-  padding: var(--space-8) 0;
-  border-bottom: 1px solid var(--color-card-border-inner);
-  position: relative;
-  padding-left: var(--space-20);
-}
-
-#keyFindings li:before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--color-success);
-  font-weight: var(--font-weight-bold);
-}
-
-#keyFindings li:last-child {
-  border-bottom: none;
-}
-
-/* Players Grid */
-.players-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-
-.player-tag {
-  background: var(--color-bg-3);
-  padding: var(--space-6) var(--space-12);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-  border: 1px solid var(--color-card-border);
-}
-
-/* Metrics Grid */
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--space-16);
-}
-
-.metric {
-  text-align: center;
-  padding: var(--space-16);
-  background: var(--color-bg-6);
-  border-radius: var(--radius-md);
-}
-
-.metric-value {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
-  margin-bottom: var(--space-4);
-}
-
-.metric-label {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Sources */
-.sources-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.source-item {
-  padding: var(--space-8);
-  background: var(--color-bg-4);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
-  font-size: var(--font-size-sm);
-}
-
-/* Reports Section */
-.reports-section,
-.analytics-section,
-.settings-section {
-  padding: var(--space-32) 0;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: var(--space-32);
-}
-
-.section-header h2 {
-  color: var(--color-text);
-  margin-bottom: var(--space-8);
-}
-
-.section-header p {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-lg);
-}
-
-.reports-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-24);
-}
-
-.report-card {
-  transition: transform var(--duration-normal) var(--ease-standard);
-}
-
-.report-card:hover {
-  transform: translateY(-4px);
-}
-
-.report-card h3 {
-  color: var(--color-primary);
-  margin-bottom: var(--space-12);
-}
-
-.report-card p {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-16);
-}
-
-/* Analytics Section */
-.analytics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: var(--space-24);
-}
-
-.analytics-card .card__header {
-  background: var(--color-bg-2);
-  border-bottom: 1px solid var(--color-card-border-inner);
-}
-
-.analytics-card .card__header h3 {
-  color: var(--color-primary);
-}
-
-.metrics-overview {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--space-16);
-}
-
-.regional-stats {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-}
-
-.region-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-
-.region-name {
-  min-width: 120px;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-}
-
-.region-bar {
-  flex: 1;
-  height: 8px;
-  background: var(--color-bg-1);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.region-progress {
-  height: 100%;
-  background: var(--color-primary);
-  border-radius: var(--radius-full);
-  transition: width var(--duration-normal) var(--ease-standard);
-}
-
-.region-value {
-  min-width: 40px;
-  text-align: right;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
-}
-
-/* Settings Section */
-.settings-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-24);
-}
-
-.settings-card .card__header {
-  background: var(--color-bg-3);
-  border-bottom: 1px solid var(--color-card-border-inner);
-}
-
-.settings-card .card__header h3 {
-  color: var(--color-primary);
-}
-
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
-
-.checkbox-group input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--color-primary);
-}
-
-/* Footer */
-.footer {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-card-border);
-  padding: var(--space-32) 0;
-  margin-top: var(--space-32);
-}
-
-.footer__content {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: var(--space-32);
-}
-
-.footer__section h4,
-.footer__section h5 {
-  margin-bottom: var(--space-16);
-  color: var(--color-text);
-}
-
-.footer__section a {
-  display: block;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-8);
-  font-size: var(--font-size-sm);
-}
-
-.footer__section a:hover {
-  color: var(--color-primary);
-}
-
-/* Chart specific styles */
-.chart-container {
-  position: relative;
-  margin: var(--space-16) 0;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-24);
+  
+  // Default to MPC data
+  return researchData["mpc applications"];
+}
+
+// Quick search function
+function quickSearch(query) {
+  const searchInput = document.getElementById('mainSearchInput');
+  if (searchInput) {
+    searchInput.value = query;
   }
-  .results-grid,
-  .analytics-grid,
-  .settings-grid {
-    grid-template-columns: 1fr;
+  performSearch(query);
+}
+
+// Search by category
+function searchCategory(category) {
+  let searchQuery = '';
+  const categoryLower = category.toLowerCase();
+  
+  if (categoryLower.includes('cryptography') || categoryLower.includes('mpc')) {
+    searchQuery = 'mpc applications';
+  } else if (categoryLower.includes('digital signatures') || categoryLower.includes('tss')) {
+    searchQuery = 'digital signatures market';
+  } else if (categoryLower.includes('blockchain') || categoryLower.includes('web3')) {
+    searchQuery = 'blockchain security trends';
+  } else if (categoryLower.includes('quantum')) {
+    searchQuery = 'quantum cryptography';
+  } else {
+    searchQuery = category;
   }
-  .footer__content {
-    grid-template-columns: 1fr;
-    gap: var(--space-24);
+  
+  quickSearch(searchQuery);
+}
+
+// Handle quick access
+function handleQuickAccess(buttonText) {
+  if (buttonText.includes('Reports')) {
+    navigateToSection('reports');
+  } else if (buttonText.includes('Competitive')) {
+    quickSearch('competitive analysis');
+  } else if (buttonText.includes('Technology Trends')) {
+    navigateToSection('analytics');
+  } else if (buttonText.includes('Market Sizing')) {
+    quickSearch('market sizing');
+  } else if (buttonText.includes('Regulatory')) {
+    quickSearch('regulatory updates');
   }
 }
 
-@media (max-width: 768px) {
-  .header__content {
-    flex-direction: column;
-    gap: var(--space-16);
-  }
-  .header__nav {
-    gap: var(--space-16);
-  }
-  .search-input-container {
-    flex-direction: column;
-  }
-  .search-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  .suggestions-label {
-    width: 100%;
-    text-align: center;
-    margin-bottom: var(--space-8);
-  }
-  .results-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .results-actions {
-    width: 100%;
-    justify-content: flex-start;
-  }
-  .categories-grid,
-  .reports-grid {
-    grid-template-columns: 1fr;
-  }
-  .metrics-overview {
-    grid-template-columns: 1fr;
-  }
-  .region-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-8);
-  }
-  .region-name {
-    min-width: auto;
-  }
-  .region-bar {
-    width: 100%;
+// Loading animation
+function startLoadingAnimation() {
+  currentLoadingStep = 0;
+  updateLoadingStep();
+  
+  loadingInterval = setInterval(() => {
+    currentLoadingStep = (currentLoadingStep + 1) % loadingSteps.length;
+    updateLoadingStep();
+  }, 750);
+}
+
+function updateLoadingStep() {
+  const steps = document.querySelectorAll('.loading-step');
+  steps.forEach((step, index) => {
+    step.classList.remove('active');
+    if (index <= currentLoadingStep) {
+      step.classList.add('active');
+    }
+    step.textContent = loadingSteps[index] || '';
+  });
+}
+
+function stopLoadingAnimation() {
+  if (loadingInterval) {
+    clearInterval(loadingInterval);
+    loadingInterval = null;
   }
 }
 
-/* Utility classes for showing/hiding sections */
-.hidden {
-  display: none !important;
+// Show search results
+function showSearchResults() {
+  hideAllSections();
+  
+  const resultsSection = document.getElementById('resultsSection');
+  if (resultsSection) {
+    resultsSection.style.display = 'block';
+    resultsSection.classList.remove('hidden');
+  }
+  
+  if (currentSearchData) {
+    populateSearchResults(currentSearchData);
+    
+    // Create chart after DOM update
+    setTimeout(() => {
+      createMarketChart(currentSearchData.marketData);
+    }, 100);
+  }
+  
+  setupResultsEventListeners();
 }
 
-.visible {
-  display: block !important;
+// Populate search results
+function populateSearchResults(data) {
+  // Executive summary
+  const executiveSummary = document.getElementById('executiveSummary');
+  if (executiveSummary) {
+    executiveSummary.textContent = data.executiveSummary;
+  }
+  
+  // Key findings
+  const keyFindingsList = document.getElementById('keyFindings');
+  if (keyFindingsList && data.keyFindings) {
+    keyFindingsList.innerHTML = '';
+    data.keyFindings.forEach(finding => {
+      const li = document.createElement('li');
+      li.textContent = finding;
+      keyFindingsList.appendChild(li);
+    });
+  }
+  
+  // Key players
+  const playersGrid = document.getElementById('keyPlayers');
+  if (playersGrid && data.keyPlayers) {
+    playersGrid.innerHTML = '';
+    data.keyPlayers.forEach(player => {
+      const span = document.createElement('span');
+      span.className = 'player-tag';
+      span.textContent = player;
+      playersGrid.appendChild(span);
+    });
+  }
+  
+  // Sources
+  const sourcesList = document.getElementById('sources');
+  if (sourcesList && data.sources) {
+    sourcesList.innerHTML = '';
+    data.sources.forEach(source => {
+      const div = document.createElement('div');
+      div.className = 'source-item';
+      div.textContent = `📄 ${source}`;
+      sourcesList.appendChild(div);
+    });
+  }
+  
+  // Update metrics
+  if (data.marketData) {
+    const metrics = document.querySelectorAll('.metric-value');
+    if (metrics.length >= 3) {
+      metrics[0].textContent = data.marketData.currentValue || 'N/A';
+      metrics[1].textContent = data.marketData.projectedValue2030 || data.marketData.projectedValue2031 || 'N/A';
+      metrics[2].textContent = data.marketData.cagr || 'N/A';
+    }
+  }
 }
+
+// Create market chart
+function createMarketChart(marketData) {
+  const ctx = document.getElementById('marketChart');
+  if (!ctx || !marketData || !marketData.regions) return;
+  
+  // Destroy existing chart
+  if (marketChartInstance) {
+    marketChartInstance.destroy();
+  }
+  
+  const regions = marketData.regions;
+  const labels = [];
+  const data = [];
+  
+  Object.entries(regions).forEach(([region, percentage]) => {
+    const label = region.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+    labels.push(label);
+    data.push(parseInt(percentage.replace('%', '')));
+  });
+  
+  marketChartInstance = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 20,
+            usePointStyle: true
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + context.parsed + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// Setup results event listeners
+function setupResultsEventListeners() {
+  setTimeout(() => {
+    const buttons = document.querySelectorAll('.results-actions .btn');
+    buttons.forEach(btn => {
+      btn.onclick = null;
+      const text = btn.textContent.trim();
+      
+      if (text.includes('PDF')) {
+        btn.addEventListener('click', () => exportResults('pdf'));
+      } else if (text.includes('CSV')) {
+        btn.addEventListener('click', () => exportResults('csv'));
+      } else if (text.includes('Save')) {
+        btn.addEventListener('click', saveSearch);
+      }
+    });
+  }, 50);
+}
+
+// Show different sections
+function showReportsView() {
+  hideAllSections();
+  createReportsSection();
+}
+
+function showAnalyticsView() {
+  hideAllSections();
+  createAnalyticsSection();
+}
+
+function showSettingsView() {
+  hideAllSections();
+  createSettingsSection();
+}
+
+// Create sections dynamically
+function createReportsSection() {
+  let section = document.getElementById('reportsSection');
+  if (!section) {
+    section = document.createElement('section');
+    section.id = 'reportsSection';
+    section.className = 'reports-section';
+    section.innerHTML = `
+      <div class="container">
+        <div class="section-header">
+          <h2>Industry Reports</h2>
+          <p>Download comprehensive research reports and market analyses</p>
+        </div>
+        <div class="reports-grid">
+          <div class="report-card card">
+            <div class="card__body">
+              <h3>Multi-Party Computation Market Report 2024</h3>
+              <p>Comprehensive analysis of MPC market trends and applications</p>
+              <button class="btn btn--primary" onclick="downloadReport('mpc-2024')">Download PDF</button>
+            </div>
+          </div>
+          <div class="report-card card">
+            <div class="card__body">
+              <h3>Blockchain Security Landscape</h3>
+              <p>In-depth review of blockchain security threats and solutions</p>
+              <button class="btn btn--primary" onclick="downloadReport('blockchain-security')">Download PDF</button>
+            </div>
+          </div>
+          <div class="report-card card">
+            <div class="card__body">
+              <h3>Digital Signatures Industry Analysis</h3>
+              <p>Market sizing and competitive analysis of digital signature solutions</p>
+              <button class="btn btn--primary" onclick="downloadReport('digital-signatures')">Download PDF</button>
+            </div>
+          </div>
+          <div class="report-card card">
+            <div class="card__body">
+              <h3>Quantum Cryptography Outlook</h3>
+              <p>Future trends and investment opportunities in quantum cryptography</p>
+              <button class="btn btn--primary" onclick="downloadReport('quantum-crypto')">Download PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.querySelector('.main').appendChild(section);
+  }
+  
+  section.style.display = 'block';
+  section.classList.remove('hidden');
+}
+
+function createAnalyticsSection() {
+  let section = document.getElementById('analyticsSection');
+  if (!section) {
+    section = document.createElement('section');
+    section.id = 'analyticsSection';
+    section.className = 'analytics-section';
+    section.innerHTML = `
+      <div class="container">
+        <div class="section-header">
+          <h2>Market Analytics</h2>
+          <p>Interactive dashboards and data visualizations</p>
+        </div>
+        <div class="analytics-grid">
+          <div class="analytics-card card">
+            <div class="card__header">
+              <h3>Market Growth Trends</h3>
+            </div>
+            <div class="card__body">
+              <div class="chart-container" style="position: relative; height: 300px;">
+                <canvas id="growthChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="analytics-card card">
+            <div class="card__header">
+              <h3>Technology Adoption Rates</h3>
+            </div>
+            <div class="card__body">
+              <div class="chart-container" style="position: relative; height: 300px;">
+                <canvas id="adoptionChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="analytics-card card">
+            <div class="card__header">
+              <h3>Investment Tracker</h3>
+            </div>
+            <div class="card__body">
+              <div class="metrics-overview">
+                <div class="metric">
+                  <div class="metric-value">$2.4B</div>
+                  <div class="metric-label">Total Investment (2024)</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-value">127</div>
+                  <div class="metric-label">Active Startups</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-value">23%</div>
+                  <div class="metric-label">YoY Growth</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="analytics-card card">
+            <div class="card__header">
+              <h3>Regional Analysis</h3>
+            </div>
+            <div class="card__body">
+              <div class="regional-stats">
+                <div class="region-item">
+                  <span class="region-name">North America</span>
+                  <div class="region-bar">
+                    <div class="region-progress" style="width: 42%"></div>
+                  </div>
+                  <span class="region-value">42%</span>
+                </div>
+                <div class="region-item">
+                  <span class="region-name">Asia Pacific</span>
+                  <div class="region-bar">
+                    <div class="region-progress" style="width: 28%"></div>
+                  </div>
+                  <span class="region-value">28%</span>
+                </div>
+                <div class="region-item">
+                  <span class="region-name">Europe</span>
+                  <div class="region-bar">
+                    <div class="region-progress" style="width: 22%"></div>
+                  </div>
+                  <span class="region-value">22%</span>
+                </div>
+                <div class="region-item">
+                  <span class="region-name">Others</span>
+                  <div class="region-bar">
+                    <div class="region-progress" style="width: 8%"></div>
+                  </div>
+                  <span class="region-value">8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.querySelector('.main').appendChild(section);
+  }
+  
+  section.style.display = 'block';
+  section.classList.remove('hidden');
+  
+  // Create analytics charts
+  setTimeout(() => {
+    createAnalyticsCharts();
+  }, 100);
+}
+
+function createSettingsSection() {
+  let section = document.getElementById('settingsSection');
+  if (!section) {
+    section = document.createElement('section');
+    section.id = 'settingsSection';
+    section.className = 'settings-section';
+    section.innerHTML = `
+      <div class="container">
+        <div class="section-header">
+          <h2>Dashboard Settings</h2>
+          <p>Customize your research dashboard preferences</p>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card card">
+            <div class="card__header">
+              <h3>Data Sources</h3>
+            </div>
+            <div class="card__body">
+              <div class="form-group">
+                <label class="form-label">Primary Sources</label>
+                <div class="checkbox-group">
+                  <label><input type="checkbox" checked> Industry Reports</label>
+                  <label><input type="checkbox" checked> Academic Papers</label>
+                  <label><input type="checkbox"> Government Data</label>
+                  <label><input type="checkbox" checked> Company Filings</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-card card">
+            <div class="card__header">
+              <h3>Notifications</h3>
+            </div>
+            <div class="card__body">
+              <div class="form-group">
+                <label class="form-label">Alert Types</label>
+                <div class="checkbox-group">
+                  <label><input type="checkbox" checked> Market Updates</label>
+                  <label><input type="checkbox" checked> Research Alerts</label>
+                  <label><input type="checkbox"> Competitive Intelligence</label>
+                  <label><input type="checkbox" checked> New Reports</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Frequency</label>
+                <select class="form-control">
+                  <option>Daily</option>
+                  <option selected>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="settings-card card">
+            <div class="card__header">
+              <h3>Export Preferences</h3>
+            </div>
+            <div class="card__body">
+              <div class="form-group">
+                <label class="form-label">Default Format</label>
+                <select class="form-control">
+                  <option selected>PDF</option>
+                  <option>CSV</option>
+                  <option>JSON</option>
+                  <option>PowerPoint</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Include Charts</label>
+                <div class="checkbox-group">
+                  <label><input type="checkbox" checked> Include all visualizations</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-card card">
+            <div class="card__header">
+              <h3>User Profile</h3>
+            </div>
+            <div class="card__body">
+              <div class="form-group">
+                <label class="form-label">Display Name</label>
+                <input type="text" class="form-control" value="John Doe">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Department</label>
+                <input type="text" class="form-control" value="Research & Development">
+              </div>
+              <button class="btn btn--primary">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.querySelector('.main').appendChild(section);
+  }
+  
+  section.style.display = 'block';
+  section.classList.remove('hidden');
+  
+  // Setup settings event listeners
+  setupSettingsEventListeners();
+}
+
+// Create analytics charts
+function createAnalyticsCharts() {
+  const growthCtx = document.getElementById('growthChart');
+  const adoptionCtx = document.getElementById('adoptionChart');
+  
+  if (growthCtx) {
+    new Chart(growthCtx, {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+        datasets: [{
+          label: 'Market Size ($B)',
+          data: [0.8, 1.2, 1.8, 2.5, 3.7, 5.2, 7.1],
+          backgroundColor: '#1FB8CD',
+          borderColor: '#1FB8CD',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  if (adoptionCtx) {
+    new Chart(adoptionCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Financial Services', 'Healthcare', 'Government', 'Technology', 'Retail'],
+        datasets: [{
+          label: 'Adoption Rate (%)',
+          data: [78, 45, 62, 85, 34],
+          backgroundColor: ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+  }
+}
+
+// Setup settings event listeners
+function setupSettingsEventListeners() {
+  const saveBtn = document.querySelector('.settings-section .btn--primary');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', function() {
+      showNotification('Settings saved successfully', 'success');
+    });
+  }
+}
+
+// Utility functions
+function exportResults(format) {
+  const query = document.getElementById('queryTitle')?.textContent || 'Research';
+  showNotification(`Exporting "${query}" as ${format.toUpperCase()}...`, 'success');
+}
+
+function saveSearch() {
+  const query = document.getElementById('queryTitle')?.textContent || 'Current search';
+  showNotification(`"${query}" saved to research library`, 'success');
+}
+
+function downloadReport(reportId) {
+  const reportNames = {
+    'mpc-2024': 'Multi-Party Computation Market Report 2024',
+    'blockchain-security': 'Blockchain Security Landscape',
+    'digital-signatures': 'Digital Signatures Industry Analysis',
+    'quantum-crypto': 'Quantum Cryptography Outlook'
+  };
+  
+  const reportName = reportNames[reportId] || 'Report';
+  showNotification(`Downloading "${reportName}"...`, 'success');
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification--${type}`;
+  
+  const colors = {
+    success: '#10b981',
+    error: '#ef4444',
+    warning: '#f59e0b',
+    info: '#2563eb'
+  };
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${colors[type] || colors.info};
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-width: 300px;
+    font-size: 14px;
+    animation: slideIn 0.3s ease-out;
+  `;
+  
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+// Cleanup
+window.addEventListener('beforeunload', function() {
+  if (loadingInterval) clearInterval(loadingInterval);
+  if (searchTimeout) clearTimeout(searchTimeout);
+});
+
+// Global function exposure
+window.performSearch = performSearch;
+window.quickSearch = quickSearch;
+window.searchCategory = searchCategory;
+window.exportResults = exportResults;
+window.saveSearch = saveSearch;
+window.downloadReport = downloadReport;
+
+console.log('Research Dashboard loaded successfully');
